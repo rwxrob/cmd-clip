@@ -42,14 +42,14 @@ clip usage
 ```
 ## Commands
 
-* [usage] - print usage summary 
-* [play]  - play clip, randomize if duplicates, select menu if none
-* [list]  - print list of all clips by name
-* [data]  - print data for name (random if dupicates)
-* [dir]   - print directory path containing clip videos
-* [add]   - download and add video from YouTube URL
-* [edit]  - open data file for editing with `$EDITOR`
-* [help]  - display help for all or specified command
+* [usage](#usage) - print usage summary 
+* [play](#play)   - play clip, randomize if duplicates, select menu if none
+* [list](#list)   - print list of all clips by name
+* [data](#data)   - print data for name (random if dupicates)
+* [dir](#dir)     - print directory path containing clip videos
+* [add](#add)     - download and add video from YouTube URL
+* [edit](#edit)   - open data file for editing with `$EDITOR`
+* [help](#help)   - display help for all or specified command
 
 ## Data File Format
 
