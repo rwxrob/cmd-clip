@@ -51,15 +51,6 @@ clip usage
 * [edit]  - open data file for editing with `$EDITOR`
 * [help]  - display help for all or specified command
 
-[usage]: help-clip-usage.html
-[play]: help-clip-play.html
-[list]: help-clip-list.html
-[data]: help-clip-data.html
-[dir]: help-clip-dir.html
-[add]: help-clip-add.html
-[edit]: help-clip-edit.html
-[help]: help-clip-help.html
-
 ## Data File Format
 
 The data file containing clip name, volume, and source information can be edited with the `edit` command and is updated by the `add` command when adding new clips. The first two numbers after the file name (separated by commas) are for the start second (including decimals) and the length. To add another segment from the same file, add a semicolon and another start and length, and so on. Clips that have the same name will be randomized. The `play` commands accepts a regular expression which can also be used to randomize between several clips.
