@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 # shellcheck disable=SC2016
 set -e
+set -o pipefail
 
 # Copyright 2021 Rob Muhlestein <rob@rwx.gg>
 # Released under Apache-2.0 License
@@ -172,7 +173,7 @@ x_play() {
     done
     return $?
   fi
-  type keyoff &>/dev/null && (keyoff || true)
+  type keyoff &>/dev/null && (keywasoff=1 && keyoff || true)
   local -a data
   data=($(x_data "$@"))
   if [[ ! -e $CLIP_DIR/${data[2]%%,*} ]]; then
