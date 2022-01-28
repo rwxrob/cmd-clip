@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 # shellcheck disable=SC2016
 set -e
+set -o pipefail
 
 # Copyright 2021 Rob Muhlestein <rob@rwx.gg>
 # Released under Apache-2.0 License
@@ -172,9 +173,21 @@ x_play() {
     done
     return $?
   fi
-  type keyoff &>/dev/null && (keyoff || true)
+  type keyoff &>/dev/null && (keywasoff=1 && keyoff || true)
   local -a data
   data=($(x_data "$@"))
+  if [[ ! -e $CLIP_DIR/${data[2]%%,*} ]]; then
+    cd "$CLIP_DIR"
+    local id="${data[2]%%,*}"
+    local base="${id%.*}"
+    local ext="${id##*.}"
+    local url="https://youtu.be/$base"
+    if [[ $ext == "webm" ]]; then
+      youtube-dl "$url" -f "$ext+bestaudio[ext!=m4a]" --merge-output-format "$ext" -o "$base.%(ext)s"
+    else
+      youtube-dl "$url" --merge-output-format "$ext" -o "$base.%(ext)s"
+    fi  
+  fi
   local -i volume="$CLIP_VOLUME"
   volume+=${data[1]:-100}
   mpv --fs \
@@ -191,7 +204,7 @@ The `add` command will download the provided YouTube URL into the
 preserving the same file suffix. It then add an entry to the clips data
 file (`$CLIP_DATA`) with default settings which can be changed easily
 with `edit` later. Be sure to use the shareable URL (rather than the one
-in the omnibox) so that the ID is extracted correctly.'
+in the omnibox) so that the ID is extractly correctly.'
 
 x_add() {
   _filter "$@"
