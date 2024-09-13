@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # shellcheck disable=SC2016
 set -e
 
@@ -7,7 +7,7 @@ set -e
 # Please mention https://youtube.com/rwxrob
 
 : ${CLIP_DATA:="$HOME/.config/clip/data"}
-: ${CLIP_DIR:="$HOME/Videos/clips"}
+: ${CLIP_DIR:="$HOME/Movies/clips"}
 : ${CLIP_SCREEN:=1}
 : ${CLIP_VOLUME:=-50}
 : ${PAGER:=more}
@@ -28,7 +28,7 @@ Required:
 
 * `bash` (4+)
 * `mpv`
-* `youtube-dl`
+* `yt-dlp`
 
 Will use if detected:
 
@@ -179,9 +179,15 @@ x_play() {
   volume+=${data[1]:-100}
   mpv --fs \
     "--volume=$volume" \
-    "--fs-screen=$CLIP_SCREEN" \
     "edl://$CLIP_DIR/${data[2]//;/;$CLIP_DIR/${data[2]%%,*},}" \
     &>/dev/null
+
+#   mpv --fs \
+#     "--volume=$volume" \
+#     "--fs-screen=$CLIP_SCREEN" \
+#     "edl://$CLIP_DIR/${data[2]//;/;$CLIP_DIR/${data[2]%%,*},}" \
+#     &>/dev/null
+
   type keyon &>/dev/null && (keyon || true)
 }
 
@@ -199,7 +205,7 @@ x_add() {
   cd "$CLIP_DIR"
   local url="$2"
   local id="${url##*/}"
-  youtube-dl "$url" -o "$id.%(ext)s"
+  yt-dlp "$url" -o "$id.%(ext)s"
   local name base
   path=$(ls "$CLIP_DIR/$id".*)
   file=${path##*/}
